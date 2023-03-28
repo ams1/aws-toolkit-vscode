@@ -26,6 +26,7 @@ import { DefaultS3Client } from '../shared/clients/s3Client'
 import { DefaultSchemaClient } from '../shared/clients/schemaClient'
 import { getEcsRootNode } from '../ecs/model'
 import { TreeShim } from '../shared/treeview/utils'
+import { GlueNode } from '../glue/explorer/glueNodes'
 
 const serviceCandidates = [
     {
@@ -59,6 +60,10 @@ const serviceCandidates = [
     {
         serviceId: 'lambda',
         createFn: (regionCode: string) => new LambdaNode(regionCode),
+    },
+    {
+        serviceId: 'glue',
+        createFn: (regionCode: string) => new GlueNode(regionCode),
     },
     {
         serviceId: 's3',
