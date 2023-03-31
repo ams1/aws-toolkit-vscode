@@ -4,6 +4,7 @@
  */
 
 import { Glue } from 'aws-sdk'
+import { DefaultGlueClient } from '../../shared/clients/glueClient'
 import { AWSResourceNode } from '../../shared/treeview/nodes/awsResourceNode'
 import { AWSTreeNodeBase } from '../../shared/treeview/nodes/awsTreeNodeBase'
 
@@ -12,7 +13,8 @@ export class GlueJobNode extends AWSTreeNodeBase implements AWSResourceNode {
     public constructor(
         public readonly parent: AWSTreeNodeBase,
         public override readonly regionCode: string,
-        public configuration: Glue.Job
+        public configuration: Glue.Job,
+        public client: DefaultGlueClient // TODO: ams1: think about this
     ) {
         super('')
         this.update(configuration)

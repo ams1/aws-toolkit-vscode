@@ -65,7 +65,7 @@ export async function activate(context: vscode.ExtensionContext, configuration: 
         // Here instead of in ../awsexplorer/activation due to dependence on the registry.
         Commands.register(
             'aws.cloudWatchLogs.viewLogStream',
-            async (node: LogGroupNode) => await viewLogStream(node, registry)
+            async (node: LogGroupNode, logStreamName?: string) => await viewLogStream(node, registry, logStreamName)
         )
     )
 }

@@ -27,9 +27,14 @@ export interface SelectLogStreamResponse {
     logStreamName: string
 }
 
-export async function viewLogStream(node: LogGroupNode, registry: LogStreamRegistry): Promise<void> {
+export async function viewLogStream(node: LogGroupNode, registry: LogStreamRegistry, logStreamName?: string): Promise<void> {
     let result: Result = 'Succeeded'
-    const logStreamResponse = await new SelectLogStreamWizard(node).run()
+
+    const logStreamResponse = logStreamName ? {
+        region: node.regionCode,
+        logGroupName: node.name,
+        logStreamName: logStreamName!
+    } : await new SelectLogStreamWizard(node).run()
     if (logStreamResponse) {
         const uri = convertLogGroupInfoToUri(
             logStreamResponse.logGroupName,

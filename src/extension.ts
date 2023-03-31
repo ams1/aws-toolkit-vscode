@@ -68,6 +68,7 @@ import { Logging } from './shared/logger/commands'
 import { UriHandler } from './shared/vscode/uriHandler'
 import { telemetry } from './shared/telemetry/telemetry'
 import { Auth } from './credentials/auth'
+import { activate as activateGlue } from './glue/activation'
 
 let localize: nls.LocalizeFunc
 
@@ -235,6 +236,8 @@ export async function activate(context: vscode.ExtensionContext) {
         await activateSchemas(extContext)
 
         await activateStepFunctions(context, awsContext, toolkitOutputChannel)
+
+        await activateGlue(extContext)
 
         showWelcomeMessage(context)
 

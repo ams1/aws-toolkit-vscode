@@ -111,6 +111,7 @@
     "AWS.command.ecr.createRepository": "Create Repository...",
     "AWS.command.ecr.deleteRepository": "Delete Repository...",
     "AWS.command.ecr.deleteTag": "Delete Tag...",
+    "AWS.command.glueJobRunsCloudwatchLogs": "Get Run Logs...",
     "AWS.ecs.enableEcsExec": "Enable Command Execution",
     "AWS.ecs.disableEcsExec": "Disable Command Execution",
     "AWS.ecs.runCommandInContainer": "Run Command in Container",
