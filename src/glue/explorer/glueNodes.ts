@@ -39,7 +39,7 @@ export class GlueNode extends AWSTreeNodeBase {
             this.jobNodes,
             jobs.keys(),
             key => this.jobNodes.get(key)!.update(jobs.get(key)!),
-            key => makeGlueJobNode(this, this.regionCode, jobs.get(key)!)
+            key => makeGlueJobNode(this, this.regionCode, jobs.get(key)!, this.client)
         )
     }
 
@@ -50,7 +50,7 @@ export class GlueNode extends AWSTreeNodeBase {
                 return [...this.jobNodes.values()]
             },
             getNoChildrenPlaceholderNode: async () =>
-                new PlaceholderNode(this, localize('AWS.explorerNode.glue.noFunctions', '[No Glue Jobs found]')),
+                new PlaceholderNode(this, localize('AWS.explorerNode.glue.noJobs', '[No Glue Jobs found]')),
             // sort: (nodeA, nodeB) => nodeA.Name.localeCompare(nodeB.Name),
         })
     }
@@ -59,8 +59,10 @@ export class GlueNode extends AWSTreeNodeBase {
 function makeGlueJobNode(
     parent: AWSTreeNodeBase,
     regionCode: string,
-    configuration: Glue.Job
+    configuration: Glue.Job,
+    client: DefaultGlueClient
 ): GlueJobNode {
-    const node = new GlueJobNode(parent, regionCode, configuration)
+    const node = new GlueJobNode(parent, regionCode, configuration, client)
+    node.contextValue = "awsRegionGlueJobNode"
     return node
 }

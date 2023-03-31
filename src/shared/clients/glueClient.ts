@@ -4,7 +4,7 @@
  */
 
 import { Glue } from 'aws-sdk'
-import { Job } from 'aws-sdk/clients/glue'
+import { Job, JobRun } from 'aws-sdk/clients/glue'
 import globals from '../extensionGlobals'
 import { ClassToInterfaceType } from '../utilities/tsUtils'
 
@@ -20,9 +20,23 @@ export class DefaultGlueClient {
         do {
             const response: Glue.GetJobsResponse = await client.getJobs(request).promise()
 
-            console.log(response.Jobs)
             if (response.Jobs) {
                 yield* response.Jobs
+            }
+
+            request.NextToken = response.NextToken
+        } while (request.NextToken !== undefined)
+    }
+
+    public async *listJobRuns(JobName: string): AsyncIterableIterator<JobRun> {
+        const client = await this.createSdkClient()
+
+        const request: Glue.GetJobRunsRequest = {JobName: JobName}
+        do {
+            const response: Glue.GetJobRunsResponse = await client.getJobRuns(request).promise()
+
+            if (response.JobRuns) {
+                yield* response.JobRuns
             }
 
             request.NextToken = response.NextToken

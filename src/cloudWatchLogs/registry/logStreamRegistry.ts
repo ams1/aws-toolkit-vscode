@@ -220,6 +220,7 @@ export class LogStreamRegistry {
             logStreamName: logGroupInfo.streamName,
             nextToken,
             limit: this.configuration.get('limit', 1000),
+            startFromHead: true // fix GH-3295
         })
     }
 }
