@@ -70,7 +70,7 @@ function createJobRunIdPrompter(node: GlueJobNode) {
     const items = toArrayAsync(convertJobRunToDataQuickPickItems(jobRuns))
 
     return createQuickPick(items, {
-        title: localize('AWS.glue.jobRunId.title', `${node.name}: Select a Job Run`),
+        title: node.name + ": " + localize('AWS.glue.jobRunId.title', "Select a Job Run"),
         // TODO: think about awsConsoleUri parameter used below
         buttons: createCommonButtons(),
     })
@@ -97,7 +97,7 @@ function createLogGroupNamePrompter(jobName: string) {
     ]
 
     return createQuickPick(items, {
-        title: localize('AWS.glue.logGroupName.title', `${jobName}: Select Log Group`),
+        title: jobName + ": " + localize('AWS.glue.logGroupName.title', "Select Log Group"),
         buttons: createCommonButtons(),
     })
 }
@@ -109,7 +109,7 @@ function createLogStreamNamePrompter(region: string, logGroupName: string, logSt
     const items = toArrayAsync(convertLogStreamNames2DataQuickPickItems(logGroupName, logStreamNamePrefix, region))
 
     return createQuickPick(items, {
-        title: localize('AWS.glue.logStreamName.title', `${jobName}: Select Log Stream`),
+        title: jobName + ": " + localize('AWS.glue.logStreamName.title', "Select Log Stream"),
         buttons: createCommonButtons(),
     })
 }
@@ -186,7 +186,7 @@ async function* convertJobRunToDataQuickPickItems(jobRuns: AsyncIterableIterator
 
         result.push({
             // TODO: add job run duration to detail
-            label: addCodiconToString(icon, localize('AWS.generic.filetype.zipfile', `${jobRun.Id}`)),
+            label: addCodiconToString(icon, jobRun.Id!),
             detail: moment(jobRun.StartedOn).format(LOCALIZED_DATE_FORMAT),
             data: jobRun.Id,
         })
